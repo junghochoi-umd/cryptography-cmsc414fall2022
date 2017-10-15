@@ -1,0 +1,94 @@
+The overall learning objective of this lab is to get familiar with
+the concepts on substitution ciphers and symmetric key and public
+key cryptography. You will be getting first-hand experience with
+using the OpenSSL commandline tool and library to encrypt/decrypt
+messages under different encryption modes, and to construct message
+digests with hash functions. The tasks are set up in such a way
+that you not only gain experience with the use of these various
+mechanisms, but also with their properties. You are encouraged to
+think about what these tools are doing, and why you get the results
+you get. Some tasks ask you to write up these observations. You
+will be using the same VM that you used for the previous projects.
+Also, you will have to read up on the OpenSSL documentation.
+
+Task 1: Cracking the Vigenere cipher
+
+   In class, we only considered the Vigenere Cipher as a generalization
+   of the Caesar Cipher. However, as described by Vigenere it can
+   be used as a polyalphabetic Caesar-type Cipher. This employs a
+   keyword, each letter of which is the shift for successive
+   characters of the message.  That is, if we have "abc" as the
+   keyword, then the first character of the ciphertext would be the
+   first letter of the plaintext plus 1 (the value of "a"), the
+   second would be plaintext plus 2, the third would be plaintext
+   plus 3, and then the pattern would repeat with the fourth
+   character. You can view this as a three-byte block cipher in ECB
+   mode, if that helps. Section 5.2.1 of _Security Engineering_ goes
+   into detail.
+
+   As we saw with the repeated XOR in class, we can apply frequency
+   analysis to individual characters (and even n-grams) encrypted
+   with the same substitution. What we need to know is how long the
+   keyword is, in order to know which characters are enciphered
+   with the same substitution. Anderson discusses this briefly in
+   the book, but you might find the Wikipedia page
+   https://en.wikipedia.org/wiki/Index_of_coincidence useful as an
+   additional reference.
+
+   Your target ciphertext is contained in cipher1.txt
+
+   You should develop tools (in the language of your choice) to
+   perform the Index of Coincidence computation, frequency analysis
+   (see crypto-exercises for n-gram frequencies for English), and
+   decryption. Your submission should consist of:
+
+      - keyword1.txt, which should include the keyword that you
+                      determined
+
+      - message1.txt, which should include the plaintext corresponding
+                      to cipher1.txt
+
+      - files.txt, which should include a list of all the program
+		   files you used, any build instructions, and
+		   instructions for calling the program or programs
+
+   As a recommendation, you might consider using keyword1.txt and
+   cipher1.txt as inputs to your decryption program, which would
+   then produce message1.txt.
+
+Task 2: Use OpenSSL for encryption
+
+OpenSSL (read about it here: http://wiki.openssl.org/index.php/Enc) is a util-
+ity that allows to perform various cryptographic operations. One of the cryp-
+tographic schemes implemented by OpenSSL is called AES (the Advanced En-
+cryption Standard). AES is a symmetric key encryption scheme—a block ci-
+pher—which is used to encrypt Internet traffic.
+
+In this task, you would be using the OpenSSL to encrypt a file provided to
+you and then hash it.
+3.1 Task 2.1: Encrypt the file provided to you with OpenSSL
+
+AES implemenatation using your student id as the se-
+crect key.
+
+AES secret key is only 256 bits (32 bytes), but we will use it in CBC mode to
+encrypt a file of size nearly one million bytes. This is in contrast to perfectly
+secret schemes, where the key must be as long as the message. Make sure to
+explicitly set the key and the IV.
+The AES-256 key is 256 bits and the IV is 128 bits For the IV, use a string
+of all 0s. For the key, use the 9 digits of your student ID appended with an
+appropriate number of zeros. For example, if your student id is 123456789, your
+secret key should be 12345678900. . .00.
+Use OpenSSL to encrypt the file and place it in a temporary file.
+3.2 Task 2.2: Use cryptographic hash function (SHA256)
+to hash the ciphertext to a short string.
+
+The resulting short string should be submitted as the final answer to this exer-
+cise.
+
+Use the unix command gsha256sum (see documentation here:
+http://manned.org/gsha1sum/392b94d5) to output the cryptographic hash of
+the encrypted file.
+Submit this final value as the answer to this exercise.
+
+   
