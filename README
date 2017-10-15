@@ -58,37 +58,28 @@ Task 1: Cracking the Vigenere cipher
 
 Task 2: Use OpenSSL for encryption
 
-OpenSSL (read about it here: http://wiki.openssl.org/index.php/Enc) is a util-
-ity that allows to perform various cryptographic operations. One of the cryp-
-tographic schemes implemented by OpenSSL is called AES (the Advanced En-
-cryption Standard). AES is a symmetric key encryption scheme—a block ci-
-pher—which is used to encrypt Internet traffic.
+   OpenSSL (https://www.openssl.org/) is one of the most popular
+   packages (at least in C) for performing cryptographic operations.
+   It has implementations of all the major cryptosystems, including
+   AES, which is what we will be using in this task. It has an API
+   that allows it to be used in programs requiring cryptography, as
+   well as a number of command-line utilities.
 
-In this task, you would be using the OpenSSL to encrypt a file provided to
-you and then hash it.
-3.1 Task 2.1: Encrypt the file provided to you with OpenSSL
+   AES takes a 256-bit (32-byte) key, and a 128-bit (16-byte) IV.
+   You will use your student ID, right-padded with 0's, as the key,
+   and a string of 16 0's as the IV. As discussed in class, if you
+   want to encrypt more than a single block's worth of data, you
+   need to select a streaming mode of operation. We will employ CBC
+   (Cipher Block Chain).
 
-AES implemenatation using your student id as the se-
-crect key.
+   The file message2.txt contains a large plaintext to encrypt.
 
-AES secret key is only 256 bits (32 bytes), but we will use it in CBC mode to
-encrypt a file of size nearly one million bytes. This is in contrast to perfectly
-secret schemes, where the key must be as long as the message. Make sure to
-explicitly set the key and the IV.
-The AES-256 key is 256 bits and the IV is 128 bits For the IV, use a string
-of all 0s. For the key, use the 9 digits of your student ID appended with an
-appropriate number of zeros. For example, if your student id is 123456789, your
-secret key should be 12345678900. . .00.
-Use OpenSSL to encrypt the file and place it in a temporary file.
-3.2 Task 2.2: Use cryptographic hash function (SHA256)
-to hash the ciphertext to a short string.
+   Using the OpenSSL package, encrypt the contents of message2.txt
+   with AES-256 given the key and IV as specified. Then, use SHA256
+   to hash this ciphertext to a short string. You should use the
+   command-line utiltiy sha256sum to do this. Your submission for
+   this task should include:
 
-The resulting short string should be submitted as the final answer to this exer-
-cise.
+      - hash2.txt, containing the SHA256 hash of the AES-256
+                   ciphertext
 
-Use the unix command gsha256sum (see documentation here:
-http://manned.org/gsha1sum/392b94d5) to output the cryptographic hash of
-the encrypted file.
-Submit this final value as the answer to this exercise.
-
-   
