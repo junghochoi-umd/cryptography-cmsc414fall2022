@@ -66,20 +66,23 @@ Task 2: Use OpenSSL for encryption
    well as a number of command-line utilities.
 
    AES takes a 256-bit (32-byte) key, and a 128-bit (16-byte) IV.
-   You will use your student ID, right-padded with 0's, as the key,
-   and a string of 16 0's as the IV. As discussed in class, if you
-   want to encrypt more than a single block's worth of data, you
-   need to select a streaming mode of operation. We will employ CBC
-   (Cipher Block Chain).
+   You will use your student ID, right-padded with 0's, as the key
+   (NOT a password), and a string of 16 0's as the IV. As discussed
+   in class, if you want to encrypt more than a single block's worth
+   of data, you need to select a streaming mode of operation. We
+   will employ CBC (Cipher Block Chain).
 
    The file message2.txt contains a large plaintext to encrypt.
 
-   Using the OpenSSL package, encrypt the contents of message2.txt
+   Using the OpenSSL package in C, encrypt the contents of message2.txt
    with AES-256 given the key and IV as specified. Then, use SHA256
-   to hash this ciphertext to a short string. You should use the
-   command-line utiltiy sha256sum to do this. Your submission for
+   to hash this ciphertext to a short string, also in C.  You should
+   have a single file, called encrypt2.c, that compiles to a program
+   using OpenSSL and takes a filename as input. Your submission for
    this task should include:
 
+      - encrypt2.c, containing your C code for encrypting and
+                    hashing message2.txt
       - hash2.txt, containing the SHA256 hash of the AES-256
                    ciphertext
 
