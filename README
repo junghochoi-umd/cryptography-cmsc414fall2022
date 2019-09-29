@@ -100,8 +100,8 @@ Task 2: Use OpenSSL for encryption
       - hash2.txt, containing the SHA256 hash of the AES-256
                    ciphertext
 
-   To help you out, we've provided files sample2.in, sample2.cipher,
-   and sample2.hash. These use the UID "123456789", so you can
+   To help you out, we've provided files sample2.cipher,
+   and hash2.txt These use the UID "123456789", so you can
    verify that your code is working correctly.  Obviously, you'll
    need to change the UID in your code to match this when testing,
    and to your UID for the submission.
