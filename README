@@ -7,9 +7,23 @@ digests with hash functions. The tasks are set up in such a way
 that you not only gain experience with the use of these various
 mechanisms, but also with their properties. You are encouraged to
 think about what these tools are doing, and why you get the results
-you get. Some tasks ask you to write up these observations. You
-will be using the same VM that you used for the previous projects.
-Also, you will have to read up on the OpenSSL documentation.
+you get. Some tasks ask you to write up these observations.
+
+You will be using the same baseline docker image that you used for
+the previous projects.  We recommend developing on your machine as
+normal, and then compiling and running your code within a container:
+
+ * Develop/debug code
+ * `docker run -ti --rm -v $(pwd):/opt baseline` do start a container
+ * `cd /opt` to change to the directory with your files
+ * Compile code in the container
+ * Run code in the container to verify output
+ * `exit` to terminate the container
+
+Also, you will have to read up on the OpenSSL documentation. While
+we realize there will be a lot of similarity between your code and
+documentation or tutorials that you find, you *must* submit code
+written by you, as always.
 
 Task 1: Cracking the Vigenere cipher
 
@@ -81,20 +95,21 @@ Task 2: Use OpenSSL for encryption
    automatically pad the input with enough bytes to fill the last
    block.
 
-   The file message2.txt contains a large plaintext to encrypt.
-
-   Using the OpenSSL package in C, encrypt the contents of message2.txt
-   with AES-256 given the key and IV as specified. This ciphertext
-   should be written to a binary file named cipher2.out, though you
-   do not need to read this back in, unless you want to.  Then, use
-   SHA256 to hash this ciphertext to a short string, also in C,
-   which should be output as hexadecimal, not raw binary.  You
-   should have a single file, called encrypt2.c, that compiles
-   to a program using OpenSSL and takes a filename as input. Your
-   submission for this task should include:
+   Using the OpenSSL package in C, encrypt the contents of the
+   provided file message2.txt with AES-256 given the key and IV as
+   specified. This ciphertext should be written to a binary file
+   named cipher2.out, though you do not need to read this back in,
+   unless you want to.  Then, use SHA256 to hash this ciphertext
+   to a short string, also in C, which should be output as hexadecimal,
+   not raw binary.  You should have a single file, called encrypt2.c,
+   that compiles to a program using OpenSSL and takes a filename
+   as input. Your submission for this task should include:
 
       - encrypt2.c, containing your C code for encrypting and
                     hashing message2.txt
+
+   When called as `./encrypt2 <filename>`, it should produce:
+
       - cipher2.out, containing the ciphertext produced using AES-256
 		     in CBC mode
       - hash2.txt, containing the SHA256 hash of the AES-256
@@ -105,6 +120,21 @@ Task 2: Use OpenSSL for encryption
    verify that your code is working correctly.  Obviously, you'll
    need to change the UID in your code to match this when testing,
    and to your UID for the submission.
+
+   The file message2.txt contains a large plaintext to encrypt.
+   When we run your code, we will limit the amount of memory it has
+   available to 1MB. In order to verify that your code meets this
+   limit, change the way you run your `encrypt2` program to the
+   following (provided to you as a script `constrained_encrypt2`):
+
+    * `sudo cgcreate -a crow:crow -t crow:crow -g memory:test_crypto` to create
+      a *control group* owned by user `crow` that will constrain memory
+    * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.limit_in_bytes` to
+      limit the physical memory available to processes in this group
+    * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.memsw.limit_in_bytes`
+      to limit the swap memory available to processes in this group
+    * `cgexec -g memory:test_crypto ./encrypt2 <file>` to run the
+      program within the constrained group
 
    Please note:  Your submission must be written *entirely* in C
    (excluding the Makefile).  You may *not* use the OpenSSL
