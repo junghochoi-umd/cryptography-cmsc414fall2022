@@ -14,7 +14,9 @@ the previous projects.  We recommend developing on your machine as
 normal, and then compiling and running your code within a container:
 
  * Develop/debug code
- * `docker run -ti --rm -v $(pwd):/opt baseline` do start a container
+ * `docker run -ti --privileged --rm -v $(pwd):/opt baseline` to
+   start a container in privileged mode (this will be important
+   later)
  * `cd /opt` to change to the directory with your files
  * Compile code in the container
  * Run code in the container to verify output
@@ -128,7 +130,8 @@ Task 2: Use OpenSSL for encryption
    following (provided to you as a script `constrained_encrypt2`):
 
     * `sudo cgcreate -a crow:crow -t crow:crow -g memory:test_crypto` to create
-      a *control group* owned by user `crow` that will constrain memory
+      a *control group* owned by user `crow` that will constrain memory; this
+      requires a container running in privileged mode
     * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.limit_in_bytes` to
       limit the physical memory available to processes in this group
     * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.memsw.limit_in_bytes`
