@@ -59,7 +59,10 @@ written by you, as always.
    You should develop tools (in the language of your choice) to
    perform the Kasiski Examination or Index of Coincidence
    computation, frequency analysis (see crypto-exercises for n-gram
-   frequencies for English), and decryption. Your submission should
+   frequencies for English), and decryption. **Please note that your
+   solution does not have to be completely automated.** If you had to
+   perform some of the analysis and decryption manually, this should be
+   documented in files.txt as part of your submission. Your submission should
    consist of:
 
    - keyword1.txt, which should include the keyword that you
@@ -70,7 +73,8 @@ written by you, as always.
 
    - files.txt, which should include a list of all the program
      files you used, any build instructions, and
-     instructions for calling the program or programs
+     instructions for calling the program or programs, as well as
+     a discussion of any manual decryption steps you needed to take.
 
    As a recommendation, you might consider using keyword1.txt and
    cipher1.txt as inputs to your decryption program, which would
