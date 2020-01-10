@@ -107,7 +107,7 @@ written by you, as always.
    block.
 
    Using the OpenSSL package in C, encrypt the contents of the
-   provided file message2.txt with AES-256 given the key and IV as
+   file specified on the command line with AES-256 given the key and IV as
    specified. This ciphertext should be written to a binary file
    named cipher2.out, though you do not need to read this back in,
    unless you want to.  Then, use SHA256 to hash this ciphertext
@@ -117,7 +117,7 @@ written by you, as always.
    as input. Your submission for this task should include:
 
    - encrypt2.c, containing your C code for encrypting and
-     hashing message2.txt
+     hashing an input file
 
    When called as `./encrypt2 <filename>`, it should produce:
 
