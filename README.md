@@ -133,7 +133,7 @@ written by you, as always.
    and to your UID for the submission.
 
    **When we run your code, we will limit the amount of memory it has
-   available to 1MB.** In order to verify that your code meets this
+   available to 455kB.** In order to verify that your code meets this
    limit, change the way you run your `encrypt2` program to the
    following (provided to you as a script `constrained_encrypt2`):
 
@@ -155,6 +155,12 @@ written by you, as always.
    so you would just run
 
     ./run.sh <file>
+
+   The sample text we give you (sample2.in) might work fine with this
+   memory limit when your code is written the "wrong" way, so make
+   sure you test with a larger input, like the input or output from
+   Task 1. We will grade your submission using a larger input file, to
+   which you will not have access in advance.
 
    Please note:  Your submission must be written *entirely* in C
    (excluding the Makefile).  You may *not* use the OpenSSL
