@@ -27,7 +27,7 @@ we realize there will be a lot of similarity between your code and
 documentation or tutorials that you find, you *must* submit code
 written by you, as always.
 
-Task 1: Cracking the Vigenere cipher
+## Task 1: Cracking the Vigenere cipher
 
    In class, we only considered the Vigenere Cipher as a generalization
    of the Caesar Cipher. However, as described by Vigenere it can
@@ -59,21 +59,21 @@ Task 1: Cracking the Vigenere cipher
    (see crypto-exercises for n-gram frequencies for English), and
    decryption. Your submission should consist of:
 
-      - keyword1.txt, which should include the keyword that you
-                      determined
+   - keyword1.txt, which should include the keyword that you
+     determined
 
-      - message1.txt, which should include the plaintext corresponding
-                      to cipher1.txt
+   - message1.txt, which should include the plaintext corresponding
+     to cipher1.txt
 
-      - files.txt, which should include a list of all the program
-		   files you used, any build instructions, and
-		   instructions for calling the program or programs
+   - files.txt, which should include a list of all the program
+     files you used, any build instructions, and
+     instructions for calling the program or programs
 
    As a recommendation, you might consider using keyword1.txt and
    cipher1.txt as inputs to your decryption program, which would
    then produce message1.txt.
 
-Task 2: Use OpenSSL for encryption
+## Task 2: Use OpenSSL for encryption
 
    OpenSSL (https://www.openssl.org/) is one of the most popular
    packages (at least in C) for performing cryptographic operations.
@@ -81,7 +81,14 @@ Task 2: Use OpenSSL for encryption
    AES, which is what we will be using in this task. It has an API
    that allows it to be used in programs requiring cryptography,
    as well as a number of command-line utilities. OpenSSL documentation
-   can be found at https://www.openssl.org/docs/
+   can be found at https://www.openssl.org/docs/ and https://wiki.openssl.org,
+   with
+   https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
+   and
+   https://wiki.openssl.org/index.php/EVP_Message_Digests
+   being the most useful pages for basic usage. Please note that these are
+   valuable pages for seeing the correct functions to call, and the argument
+   they accept, but they are only appropriate for small messages.
 
    AES takes a 256-bit (32-byte) key, and a 128-bit (16-byte) IV.
    You will use your student ID, right-padded with 0's, as the key
@@ -105,15 +112,15 @@ Task 2: Use OpenSSL for encryption
    that compiles to a program using OpenSSL and takes a filename
    as input. Your submission for this task should include:
 
-      - encrypt2.c, containing your C code for encrypting and
-                    hashing message2.txt
+   - encrypt2.c, containing your C code for encrypting and
+     hashing message2.txt
 
    When called as `./encrypt2 <filename>`, it should produce:
 
-      - cipher2.out, containing the ciphertext produced using AES-256
-		     in CBC mode
-      - hash2.txt, containing the SHA256 hash of the AES-256
-                   ciphertext
+   - cipher2.out, containing the ciphertext produced using AES-256
+     in CBC mode
+   - hash2.txt, containing the SHA256 hash of the AES-256
+     ciphertext
 
    To help you out, we've provided files sample2.in, sample2.cipher,
    and sample2.hash. These use the UID "123456789", so you can
@@ -127,14 +134,14 @@ Task 2: Use OpenSSL for encryption
    limit, change the way you run your `encrypt2` program to the
    following (provided to you as a script `constrained_encrypt2`):
 
-    * `sudo cgcreate -a crow:crow -t crow:crow -g memory:test_crypto` to create
+   * `sudo cgcreate -a crow:crow -t crow:crow -g memory:test_crypto` to create
       a *control group* owned by user `crow` that will constrain memory; this
       requires a container running in privileged mode
-    * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.limit_in_bytes` to
+   * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.limit_in_bytes` to
       limit the physical memory available to processes in this group
-    * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.memsw.limit_in_bytes`
+   * `echo 1M > /sys/fs/cgroup/memory/test_crypto/memory.memsw.limit_in_bytes`
       to limit the swap memory available to processes in this group
-    * `cgexec -g memory:test_crypto ./encrypt2 <file>` to run the
+   * `cgexec -g memory:test_crypto ./encrypt2 <file>` to run the
       program within the constrained group
 
    Please note:  Your submission must be written *entirely* in C
