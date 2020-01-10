@@ -43,21 +43,24 @@ written by you, as always.
    into detail.
 
    As we saw with the repeated XOR in class, we can apply frequency
-   analysis to individual characters (and even n-grams) encrypted
-   with the same substitution. What we need to know is how long the
-   keyword is, in order to know which characters are enciphered
-   with the same substitution. Anderson discusses this briefly in
-   the book, but you might find the Wikipedia page
-   https://en.wikipedia.org/wiki/Index_of_coincidence useful as an
-   additional reference. You may also find the library's page within
-   the OpenSSL Wiki hekpful: https://wiki.openssl.org/index.php/EVP
+   analysis to individual characters (and even n-grams) encrypted with
+   the same substitution. What we need to know is how long the keyword
+   is, in order to know which characters are enciphered with the same
+   substitution. Anderson discusses this briefly in the book, but you
+   might find the Wikipedia pages
+   https://en.wikipedia.org/wiki/Kasiski_examination and
+   https://en.wikipedia.org/wiki/Index_of_coincidence useful as
+   additional references for two particular methods of determining key
+   length. You may also find the library's page within the OpenSSL
+   Wiki hekpful: https://wiki.openssl.org/index.php/EVP
 
    Your target ciphertext is contained in cipher1.txt
 
    You should develop tools (in the language of your choice) to
-   perform the Index of Coincidence computation, frequency analysis
-   (see crypto-exercises for n-gram frequencies for English), and
-   decryption. Your submission should consist of:
+   perform the Kasiski Examination or Index of Coincidence
+   computation, frequency analysis (see crypto-exercises for n-gram
+   frequencies for English), and decryption. Your submission should
+   consist of:
 
    - keyword1.txt, which should include the keyword that you
      determined
@@ -79,16 +82,17 @@ written by you, as always.
    packages (at least in C) for performing cryptographic operations.
    It has implementations of all the major cryptosystems, including
    AES, which is what we will be using in this task. It has an API
-   that allows it to be used in programs requiring cryptography,
-   as well as a number of command-line utilities. OpenSSL documentation
-   can be found at https://www.openssl.org/docs/ and https://wiki.openssl.org,
-   with
+   that allows it to be used in programs requiring cryptography, as
+   well as a number of command-line utilities. OpenSSL documentation
+   can be found at https://www.openssl.org/docs/ and
+   https://wiki.openssl.org, with
    https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
-   and
-   https://wiki.openssl.org/index.php/EVP_Message_Digests
-   being the most useful pages for basic usage. Please note that these are
-   valuable pages for seeing the correct functions to call, and the argument
-   they accept, but they are only appropriate for small messages.
+   and https://wiki.openssl.org/index.php/EVP_Message_Digests being
+   the most useful pages for basic usage. Please note that these are
+   valuable pages for seeing the correct functions to call, and the
+   arguments they accept, but they are only appropriate for small
+   messages. As discussed below, your execution environment will be
+   significantly constrained, so this code will not work as written.
 
    AES takes a 256-bit (32-byte) key, and a 128-bit (16-byte) IV.
    You will use your student ID, right-padded with 0's, as the key
@@ -128,9 +132,8 @@ written by you, as always.
    need to change the UID in your code to match this when testing,
    and to your UID for the submission.
 
-   The file message2.txt contains a large plaintext to encrypt.
-   When we run your code, we will limit the amount of memory it has
-   available to 1MB. In order to verify that your code meets this
+   **When we run your code, we will limit the amount of memory it has
+   available to 1MB.** In order to verify that your code meets this
    limit, change the way you run your `encrypt2` program to the
    following (provided to you as a script `constrained_encrypt2`):
 
@@ -143,6 +146,15 @@ written by you, as always.
       to limit the swap memory available to processes in this group
    * `cgexec -g memory:test_crypto ./encrypt2 <file>` to run the
       program within the constrained group
+
+   This must then be run in a docker container, which the `run.sh` will do:
+   
+    docker run --privileged --rm -v $(pwd):/opt -w /opt baseline ./constrained_encrypt2 <file>
+
+   In `run.sh`, the file is read as an argument to the script,
+   so you would just run
+
+    ./run.sh <file>
 
    Please note:  Your submission must be written *entirely* in C
    (excluding the Makefile).  You may *not* use the OpenSSL
