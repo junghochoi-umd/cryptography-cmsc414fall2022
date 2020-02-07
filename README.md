@@ -14,7 +14,7 @@ the previous projects.  We recommend developing on your machine as
 normal, and then compiling and running your code within a container:
 
  * Develop/debug code
- * `docker run -ti --privileged --rm -v $(pwd):/opt baseline` to
+ * `docker run -ti --privileged --rm -v "$(pwd):/opt" baseline` to
    start a container in privileged mode (this will be important
    later)
  * `cd /opt` to change to the directory with your files
@@ -153,7 +153,7 @@ written by you, as always.
 
    This must then be run in a docker container, which the `run.sh` will do:
    
-    docker run --privileged --rm -v $(pwd):/opt -w /opt baseline ./constrained_encrypt2 <file>
+    docker run --privileged --rm -v "$(pwd):/opt" -w /opt baseline ./constrained_encrypt2 <file>
 
    In `run.sh`, the file is read as an argument to the script,
    so you would just run
