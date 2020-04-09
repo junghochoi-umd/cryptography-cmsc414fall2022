@@ -164,7 +164,12 @@ written by you, as always.
    memory limit when your code is written the "wrong" way, so make
    sure you test with a larger input, like the input or output from
    Task 1. We will grade your submission using a larger input file, to
-   which you will not have access in advance.
+   which you will not have access in advance. As an additional tip,
+   the C functions that take a `FILE*` argument do I/O buffering, and
+   might cause problems for you. `open()`, `read()`, and `write()`
+   should be safe to use. You should be able to download the text of
+   any book on http://www.gutenberg.org/ and successfully encrypt and
+   hash it.
 
    Please note:  Your submission must be written *entirely* in C
    (excluding the Makefile).  You may *not* use the OpenSSL
