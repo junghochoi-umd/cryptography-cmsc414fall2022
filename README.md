@@ -35,9 +35,9 @@ written by you, as always.
    keyword, each letter of which is the shift for successive
    characters of the message.  That is, if we have "abc" as the
    keyword, then the first character of the ciphertext would be the
-   first letter of the plaintext plus 0 (the value of "a"), the
-   second would be plaintext plus 1, the third would be plaintext
-   plus 2, and then the pattern would repeat with the fourth
+   first letter of the plaintext plus 1 (the value of "a"), the
+   second would be plaintext plus 2, the third would be plaintext
+   plus 3, and then the pattern would repeat with the fourth
    character. You can view this as a three-byte block cipher in ECB
    mode, if that helps. Section 5.2.1 of _Security Engineering_ goes
    into detail.
