@@ -42,6 +42,11 @@ order given:
     savings account
  9. A balance request for your checking account
 
+You are also given a second ciphertext stream, `other.out`. This
+stream is from a *different* session, so it is not encrypted with the
+same key.  In addition, you do *not* know what requests were used to
+generate this.  This will allow you to test your code against an
+unknown request sequence.
 
 
 ## Tasks
@@ -174,9 +179,79 @@ needed) a `Makefile`.
 
 ## Tips
 
- * While you must provide four separate executables, you will probably
-   want to have some code in common between them. This might be an
-   additional `.c` and `.h` file, a python file to import, or
-   something else. You might even have a single binary, and bash
-   scripts to call it with appropriate arguments for the individual
-   tasks.
+### Examining Binary Files
+
+You are strongly encouraged to view the ciphertext streams through a
+hex-formatting program like `xxd` or `hexdump`.
+
+### Common Code
+
+While you must provide four separate executables, you will probably
+want to have some code in common between them. This might be an
+additional `.c` and `.h` file, a python file to import, or something
+else. You might even have a single binary, and bash scripts to call it
+with appropriate arguments for the individual tasks.
+
+### Using C
+
+C is a good language for working with binary data, though you are free
+to use any language already installed in the `baseline` image. We
+*will not* install additional packages for you, and you *should not*
+assume Internet access when building or running your code.
+
+If you would like to use C, here are some things you might find
+useful.
+
+#### Working with Binary Data
+
+Be careful when working with ciphertext that you *do not* use string
+functions. Instead, you should use `memcpy` to copy data from one
+binary array to another, and `memcmp` to compare arrays. See the
+documentation for both of these.
+
+#### Linked Lists
+
+C does not have a library of basic data structures. Rather than creating
+overly-large arrays or reallocating memory and copying as you need more
+space, it is easy to write a simple linked list. We generally do this
+structure-by-structure.
+
+Consider a structure:
+```C
+struct foo {
+   int a;
+   double b;
+}
+```
+
+There are two approaches to creating a linked list of `struct foo`.
+One is to define a new enclosing structure:
+```C
+struct foo_list {
+   struct foo item;
+   struct foo_list* next;
+}
+
+struct foo_list  foo_HEAD;
+struct foo_list* foo_TAIL = &foo_HEAD;
+```
+The global (or file-static) `foo_HEAD` is a dummy entry, and we add to
+the list by allocating a new `struct foo_list` (with `malloc`),
+assigning it to `foo_TAIL->next`, and updating `foo_TAIL` to this new
+pointer.
+
+The other way is to combine everything into a single `struct`:
+```C
+struct foo {
+   int a;
+   double b;
+   struct foo* next;
+}
+
+struct foo  foo_HEAD;
+struct foo* foo_TAIL = &foo_HEAD;
+```
+
+Which you use is largely a matter of style. It is also possible to
+define a generic linked list with a `void*` item, but you lose any
+type information when you do this.
