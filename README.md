@@ -25,7 +25,7 @@ From this, you will need to do the following:
 
 ## The Reference Stream
 
-The file `reference.out` contains the following sequence of requests, in the
+The file `reference.in` contains the following sequence of requests, in the
 order given:
 
  1. A balance request for your checking account
@@ -42,7 +42,7 @@ order given:
     savings account
  9. A balance request for your checking account
 
-You are also given a second ciphertext stream, `other.out`. This
+You are also given a second ciphertext stream, `other.in`. This
 stream is from a *different* session, so it is not encrypted with the
 same key.  In addition, you do *not* know what requests were used to
 generate this.  This will allow you to test your code against an
@@ -75,7 +75,10 @@ the ciphertext for a session and outputs
 
 The ciphertext will be provided as the only command-line argument to
 your executable, and will be in the same format as the reference
-stream.
+stream. That is, we will call it as (for an input file `task1.in`)
+```
+./task1 task1.in
+```
 
 ### Task 2
 
@@ -255,3 +258,29 @@ struct foo* foo_TAIL = &foo_HEAD;
 Which you use is largely a matter of style. It is also possible to
 define a generic linked list with a `void*` item, but you lose any
 type information when you do this.
+
+
+### Using Python
+
+Binary data in python is a little more cumbersome than in C, but it is
+otherwise generally easier to write code in, and has useful structures
+like `list` and `dict`.
+
+Section 6.3 of *A General Systems Handbook* briefly discusses files, but
+this is from the perspective of text files. For binary files, you need
+to add the specifier `b` when opening the file:
+
+```python
+with open('input_file.bin', 'rb') as in_file:
+    data = in_file.read(nbytes)   # data is of type "bytes"
+    hexdata = data.hex            # hexdata is a string of hex digits
+    bin = bytes.fromhex(hexdata)  # bin should be the same as data
+```
+We have also shown how to convert between the `bytes` type (a string-like
+object) and a string with the hexadecimal representation of the bytes.
+
+Writing is similar:
+```python
+with open('output_file.bin', 'wb') as out_file:
+    out_file.write(bin)   # the bytes object above
+```
