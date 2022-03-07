@@ -23,10 +23,11 @@ From this, you will need to do the following:
    *different* key
 
 
-## The Reference Stream
+## The Reference Streams
 
-The file `reference.in` contains the following sequence of requests, in the
-order given:
+Ciphertext streams can be found on ELMS in "Cryptography Sessions"
+under "Files".  The file `reference.in` contains the following
+sequence of requests, in the order given:
 
  1. A balance request for your checking account
  2. A $100 transfer from your checking account to your savings
@@ -61,7 +62,13 @@ will be called *without arguments*. That is, do not expect us to run
 
 Each task will operate on a *separate session*. That is, they will all
 be encrypted with different keys. You will have limited information
-about each session.
+about each session. We will guarantee the following about sessions:
+
+ * **No transaction will have the same source and destination account.**
+ * **Except where noted in the task description, all account numbers will
+   appear at least twice.**
+ * **All three transaction types will appear.**
+ * **At a minimum, there will be one repeated BALANCE request transaction.**
 
 See the Implementation Notes below for formatting of output and other
 requirements.
