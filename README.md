@@ -43,11 +43,11 @@ sequence of requests, in the order given:
     savings account
  9. A balance request for your checking account
 
-You are also given a second ciphertext stream, `other.in`. This
-stream is from a *different* session, so it is not encrypted with the
-same key.  In addition, you do *not* know what requests were used to
-generate this.  This will allow you to test your code against an
-unknown request sequence.
+You are also given additional ciphertext streams, which are from
+*different* sessions, so they are not encrypted with the same key.
+In addition, you do *not* know what requests were used to generate
+this.  This will allow you to test your code against an unknown
+request sequence.
 
 
 ## Tasks
@@ -69,6 +69,8 @@ about each session. We will guarantee the following about sessions:
    appear at least twice.**
  * **All three transaction types will appear.**
  * **At a minimum, there will be one repeated BALANCE request transaction.**
+ * **There are no partial transactions, so every transaction that begins
+   in the session will be complete.**
 
 See the Implementation Notes below for formatting of output and other
 requirements.
@@ -189,6 +191,34 @@ needed) a `Makefile`.
 
 ## Tips
 
+### Parsing the Session Structure
+
+There is no limit on the number of accounts showing up in a
+session. It might be useful to think of each account as a principal in
+the system (which it is). You can consider all of the accounts
+originating transactions as being principals that share a single
+identity. The attacker, in contrast, is a separate identity, and will
+not be initiating a transaction in tasks 2-4.
+
+A good place to start while coding your solution is to focus solely on
+the types of transactions, ignoring the other fields. You should be
+able to start by assuming the first transaction is of a particular
+type, and see what that implies for the next transaction, which will
+either be the same type or one of the other two. You can do this
+iteratively, and ultimately you’ll see one of the following:
+
+  1. You have consumed the entire session, with only three transaction
+     types appearing.
+  2. You have found some number of transaction types other than three.
+  3. You either have bytes left in the session that cannot form a new
+     transaction, or your final transaction is incomplete.
+
+The first of these should indicate successful parsing. Either of the
+others means you have made an incorrect assumption/guess during your
+parsing, and you need to unwind.
+
+You should be able to enumerate all of the possibilities in your code.
+
 ### Examining Binary Files
 
 You are strongly encouraged to view the ciphertext streams through a
@@ -279,9 +309,9 @@ to add the specifier `b` when opening the file:
 
 ```python
 with open('input_file.bin', 'rb') as in_file:
-    data = in_file.read(nbytes)   # data is of type "bytes"
-    hexdata = data.hex            # hexdata is a string of hex digits
-    bin = bytes.fromhex(hexdata)  # bin should be the same as data
+    data = in_file.read(nbytes)       # data is of type "bytes"
+    hexdata = data.hex()              # hexdata is a string of hex digits
+    bindata = bytes.fromhex(hexdata)  # bindata should be the same as data
 ```
 We have also shown how to convert between the `bytes` type (a string-like
 object) and a string with the hexadecimal representation of the bytes.
@@ -289,5 +319,5 @@ object) and a string with the hexadecimal representation of the bytes.
 Writing is similar:
 ```python
 with open('output_file.bin', 'wb') as out_file:
-    out_file.write(bin)   # the bytes object above
+    out_file.write(bindata)   # the bytes object above
 ```
