@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+
+#vi +':wq ++ff=unix' filename.py line endings have CR characters
+import sys
+
+with open(sys.argv[1], 'rb') as in_file:
+    data = in_file.read()       # data is of type "bytes"
+    hexdata = data.hex()              # hexdata is a string of hex digits
+    bindata = bytes.fromhex(hexdata)  # bindata should be the same as data
+
+n = 32
+chunks = [hexdata[i:i+n] for i in range(0, len(hexdata), n)]
+
+de_map = {}
+
+# Assume first cmd is BALANCE and next seen is TRANSFER
+scan = 0
+correct = False
+de_map[chunks[0]] = "BALANCE"
+while scan < len(chunks) and len(de_map) < 4:
+    if chunks[scan] in de_map:
+        if de_map[chunks[scan]] == "BALANCE":
+            scan += 2
+        elif de_map[chunks[scan]] == "INVOICE":
+            scan += 4
+        elif de_map[chunks[scan]] == "TRANSFER":
+            scan += 5
+    else: 
+        if "TRANSFER" in de_map.values():
+            de_map[chunks[scan]] = "INVOICE"
+        else:
+            de_map[chunks[scan]] = "TRANSFER"
+
+# Check if previous was correct
+if scan == len(chunks):
+    correct = True
+else: # Assume first transact was BALANCE and next seen is INVOICE
+    de_map = {}
+    scan = 0
+    de_map[chunks[0]] = "BALANCE"
+    while scan < len(chunks) and len(de_map) < 4:
+        if chunks[scan] in de_map:
+            if de_map[chunks[scan]] == "BALANCE":
+                scan += 2
+            elif de_map[chunks[scan]] == "INVOICE":
+                scan += 4
+            elif de_map[chunks[scan]] == "TRANSFER":
+                scan += 5
+        else: 
+            if "INVOICE" in de_map.values():
+                de_map[chunks[scan]] = "TRANSFER"
+            else:
+                de_map[chunks[scan]] = "INVOICE"
+
+
+# Check if previous was correct
+if scan == len(chunks):
+    correct = True
+else: # Assume first transact was TRANSFER and next seen is INVOICE
+    de_map = {}
+    scan = 0
+    de_map[chunks[0]] = "TRANSFER"
+    while scan < len(chunks) and len(de_map) < 4:
+        if chunks[scan] in de_map:
+            if de_map[chunks[scan]] == "BALANCE":
+                scan += 2
+            elif de_map[chunks[scan]] == "INVOICE":
+                scan += 4
+            elif de_map[chunks[scan]] == "TRANSFER":
+                scan += 5
+        else: 
+            if "INVOICE" in de_map.values():
+                de_map[chunks[scan]] = "TRANSFER"
+            else:
+                de_map[chunks[scan]] = "INVOICE"
+
+# Check if previous was correct
+if scan == len(chunks):
+    correct = True
+else: # Assume first transact was TRANSFER and next seen is BALANCE
+    de_map = {}
+    scan = 0
+    de_map[chunks[0]] = "TRANSFER"
+    while scan < len(chunks) and len(de_map) < 4:
+        if chunks[scan] in de_map:
+            if de_map[chunks[scan]] == "BALANCE":
+                scan += 2
+            elif de_map[chunks[scan]] == "INVOICE":
+                scan += 4
+            elif de_map[chunks[scan]] == "TRANSFER":
+                scan += 5
+        else: 
+            if "BALANCE" in de_map.values():
+                de_map[chunks[scan]] = "TRANSFER"
+            else:
+                de_map[chunks[scan]] = "BALANCE"
+
+# Check if previous was correct
+if scan == len(chunks):
+    correct = True
+else: # Assume first transact was INVOICE and next seen is BALANCE
+    de_map = {}
+    scan = 0
+    de_map[chunks[0]] = "INVOICE"
+    while scan < len(chunks) and len(de_map) < 4:
+        if chunks[scan] in de_map:
+            if de_map[chunks[scan]] == "BALANCE":
+                scan += 2
+            elif de_map[chunks[scan]] == "INVOICE":
+                scan += 4
+            elif de_map[chunks[scan]] == "TRANSFER":
+                scan += 5
+        else: 
+            if "BALANCE" in de_map.values():
+                de_map[chunks[scan]] = "TRANSFER"
+            else:
+                de_map[chunks[scan]] = "BALANCE"
+
+# Check if previous was correct
+if scan == len(chunks):
+    correct = True
+else: # Assume first transact was INVOICE and next seen is TRANSFER
+    de_map = {}
+    scan = 0
+    de_map[chunks[0]] = "INVOICE"
+    while scan < len(chunks) and len(de_map) < 4:
+        if chunks[scan] in de_map:
+            if de_map[chunks[scan]] == "BALANCE":
+                scan += 2
+            elif de_map[chunks[scan]] == "INVOICE":
+                scan += 4
+            elif de_map[chunks[scan]] == "TRANSFER":
+                scan += 5
+        else: 
+            if "TRANSFER" in de_map.values():
+                de_map[chunks[scan]] = "BALANCE"
+            else:
+                de_map[chunks[scan]] = "TRANSFER"
+
+for index, line in enumerate(chunks):
+    if line in de_map:
+        print(de_map[line])

@@ -1,0 +1,29 @@
+6e45 213e bf4b aa29 214d 9928 c4c3 7ee3  A - #1 Req balance
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B - balance Request to checking acc
+59a6 7f36 26f8 3485 07b3 7c57 dd77 b6a1  C > #2 Init transac
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B > checking acc
+8b16 f5a6 b797 7156 d0bb b44c 7295 95a1  ......qV...Lr... > This must be the ammount 100?
+8d06 ca17 3434 e78d deb0 e64b d09a 9929  D > Savings acc
+eb9f 3817 b085 6f56 561f 5967 edd9 c40a  F > executed immediately -- a $100 transfer from your checking account to your savings account, to be executed immediately
+6e45 213e bf4b aa29 214d 9928 c4c3 7ee3  A - #3 Req balance
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B - balance Request to checking acc
+6e45 213e bf4b aa29 214d 9928 c4c3 7ee3  A > #4 Req balance
+8d06 ca17 3434 e78d deb0 e64b d09a 9929  D > Savings acc
+59a6 7f36 26f8 3485 07b3 7c57 dd77 b6a1  C - #5 Init transac
+8d06 ca17 3434 e78d deb0 e64b d09a 9929  D - Savings acc
+2411 d801 4587 9f6b f322 5b3c fa71 1386  E - amount $1000
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B - checking acc
+eb9f 3817 b085 6f56 561f 5967 edd9 c40a  F - executed immediately -- a $1000 transfer from your savings account to your checking account, to be executed immediately
+59a6 7f36 26f8 3485 07b3 7c57 dd77 b6a1  C > #6 Init transac
+8d06 ca17 3434 e78d deb0 e64b d09a 9929  D > Savings acc
+2411 d801 4587 9f6b f322 5b3c fa71 1386  E > amount $1000
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B > checking acc
+21b2 307a 7239 0548 9f54 f57e 65d4 726e  !.0zr9.H.T.~e.rn > executed tomorrow -- a $1000 transfer from your savings account to your checking account, to be executed tomorrow
+6e45 213e bf4b aa29 214d 9928 c4c3 7ee3  A - #7 Req balance
+8d06 ca17 3434 e78d deb0 e64b d09a 9929  D - Savings acc
+aa9f 78d2 369f 0b91 c862 249f 5805 6353  ..x.6....b$.X.cS > #8 Payment req
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B > checking acc
+8d06 ca17 3434 e78d deb0 e64b d09a 9929  D > Savings acc
+2411 d801 4587 9f6b f322 5b3c fa71 1386  E > amount $1000 -- a request for payment of $1000 to your checking account from your savings account
+6e45 213e bf4b aa29 214d 9928 c4c3 7ee3  A - #9 Req balance
+1575 1e9f 8201 e67c 0b53 5580 f5c0 ff5c  B - balance Request to checking acc
