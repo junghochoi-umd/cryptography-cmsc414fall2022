@@ -11,7 +11,7 @@ n = 32
 chunks = [hexdata[i:i+n] for i in range(0, len(hexdata), n)]
 
 # !!!Edit to simulate my acc
-chunks[25] = "8d06ca173434e78ddeb0e64bd09a9900"
+#chunks[25] = "8d06ca173434e78ddeb0e64bd09a9900"
 
 occ_map = {}
 for chunk in chunks:
