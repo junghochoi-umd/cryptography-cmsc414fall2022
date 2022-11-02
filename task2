@@ -78,7 +78,7 @@ else: # Assume first transact was TRANSFER and next seen is INVOICE
                 scan += 5
         else: 
             if "INVOICE" in de_map.values():
-                de_map[chunks[scan]] = "TRANSFER"
+                de_map[chunks[scan]] = "BALANCE"
             else:
                 de_map[chunks[scan]] = "INVOICE"
 
@@ -99,7 +99,7 @@ else: # Assume first transact was TRANSFER and next seen is BALANCE
                 scan += 5
         else: 
             if "BALANCE" in de_map.values():
-                de_map[chunks[scan]] = "TRANSFER"
+                de_map[chunks[scan]] = "INVOICE"
             else:
                 de_map[chunks[scan]] = "BALANCE"
 
@@ -166,7 +166,7 @@ hex_out = "".join(chunks)
 bin_out = bytes.fromhex(hex_out)
 
 # Print to output file
-f = open("task21.out", "wb")
+f = open("task2.out", "wb")
 f.write(bin_out)
 f.close()
 
